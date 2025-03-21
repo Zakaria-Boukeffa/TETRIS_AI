@@ -34,6 +34,7 @@ class TetrisGame:
         self.game_over = False
         self.using_alt_colors = False
         self.color_change_timer = None
+        self.flash_timer = None # ADD THIS
         self.slowdown_timer = None
         
         # Initialize human board
@@ -196,20 +197,46 @@ class TetrisGame:
         if not self.game_over:
             self.using_alt_colors = True
             self._show_status_message("Color Change Activated!")
-            self._redraw_boards()
-            
+            self._start_flashing_colors() # call the new flash color method
+
             # Schedule end of color change
             self.color_change_timer = self.master.after(COLOR_CHANGE_DURATION, self._end_color_change)
-            
+
             # Schedule next color change
             self._schedule_color_change()
-    
+
     def _end_color_change(self):
         """End the color change effect"""
         if not self.game_over:
             self.using_alt_colors = False
             self._clear_status_message()
+            
+            # Cancel the flash timer
+            if self.flash_timer:
+                self.master.after_cancel(self.flash_timer)
+                self.flash_timer = None
+                
+            self._redraw_boards()  # redraw one last time with the normal colors
+
+    def _start_flashing_colors(self):
+        """Create a rainbow effect by cycling through colors"""
+        if self.using_alt_colors:
+            # Create rainbow colors that cycle
+            rainbow_colors = ["#FF0000", "#FF7F00", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#9400D3"]
+            
+            # Get the current time to determine which color to use
+            current_time = int(time.time() * 1000) % (len(rainbow_colors) * FLASH_SPEED)
+            color_index = current_time // FLASH_SPEED
+            
+            # Override the ALT_PIECE_COLORS with the current rainbow color
+            for shape in PIECE_COLORS:
+                ALT_PIECE_COLORS[shape] = rainbow_colors[color_index % len(rainbow_colors)]
+            
+            # Redraw with the current color state
             self._redraw_boards()
+            
+            # Schedule next flash
+            self.flash_timer = self.master.after(FLASH_SPEED, self._start_flashing_colors)
     
     def _update_timer(self):
         """Update the timer display every second"""
@@ -699,20 +726,7 @@ class TetrisGame:
         # Cancel any pending timers
         if self.color_change_timer:
             self.master.after_cancel(self.color_change_timer)
+        if self.flash_timer:  # Add this line
+            self.master.after_cancel(self.flash_timer)
         if self.slowdown_timer:
             self.master.after_cancel(self.slowdown_timer)
-        
-        # Reset game state
-        self.paused = False
-        self.game_over = False
-        self.using_alt_colors = False
-        self.human_is_slowed = False
-        self.ai_is_slowed = False
-        self.human_fall_speed = INITIAL_SPEED
-        self.ai_fall_speed = INITIAL_SPEED
-        
-        # Clear any status messages
-        self._clear_status_message()
-        
-        # Start the game
-        self.start()

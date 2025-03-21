@@ -67,6 +67,8 @@ SLOWDOWN_PERCENTAGE = 0.8  # 20% slower
 SPECIAL_PIECE_THRESHOLD = 3000
 COLOR_CHANGE_INTERVAL = 120000  # 2 minutes in milliseconds
 COLOR_CHANGE_DURATION = 20000   # 20 seconds in milliseconds
+ALT_COLORS = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF"] 
+FLASH_SPEED = 100 # Milliseconds. Lower = faster flashing
 
 
 # Tetromino Shapes (representing the 7 standard tetrominos)
