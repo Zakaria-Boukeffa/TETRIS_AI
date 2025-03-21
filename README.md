@@ -70,9 +70,7 @@ The project is structured in multiple modules for better organization:
 Contains the main game logic, UI elements, and game loop. Manages interactions between different components.
 
 ### tetris.py
-Implements the core Tetris mechanics:
-- `TetrisBoard` class: Manages the game grid, checks for valid positions, places pieces, and clears completed lines
-- `TetrisPiece` class: Defines piece shapes, handles rotation, and movement
+Implements the core Tetris mechanics
 
 ### ai.py
 Contains the AI player implementation:
