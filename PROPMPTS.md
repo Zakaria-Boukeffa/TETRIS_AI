@@ -80,3 +80,39 @@ Affiche les scores en direct pour les deux joueurs.
 ```
 
 - PS: I only had the free version of Claude, so once I reached the limit, I switched to Perplexity. I uploaded all the files and continued developing.
+
+## Final Prompt
+```
+Find attached the project files. Check if the following functions were correctly implemented:  
+
+Core Features  
+- Two grids:  
+  - One for the human player.  
+  - One for the AI, displayed side by side.  
+
+- Controls:  
+  - Human: Arrow keys (left, right, down, up to rotate).  
+  - AI: Plays automatically using simple logic (e.g., placing pieces optimally without complex decision-making).  
+
+- Scoreboard:  
+  - Points:  
+    - 50 points per cleared line.  
+    - Bonus:  
+      - 100 for 2 lines.  
+      - 200 for 3 lines.  
+      - 300 for a Tetris (4 lines).  
+  - Displays live scores for both players.  
+
+Fun Rules  
+1. Surprise Gift  
+   - When a player clears 2 lines at once, the opponent receives an "easy piece" (e.g., a square or a straight line) to help them.  
+
+2. Soft Pause  
+   - Every 1,000 points, piece fall speed decreases by 20% for 10 seconds, giving both players a short break.  
+
+3. Funny Piece
+   - Every 3,000 points, a special piece (e.g., heart or star) appears. If placed correctly, it grants a 100-point bonus.  
+
+4. Rainbow Mode  
+   - Every 2 minutes, pieces change color for 20 seconds—purely visual fun, no gameplay impact.  
+```
