@@ -44,6 +44,7 @@ class TetrisGame:
         self.human_current_y = 0
         self.human_fall_speed = INITIAL_SPEED
         self.human_is_slowed = False
+        self.human_slowdown_timer = None
         
         # Initialize AI board
         self.ai_board = self._create_empty_board()
@@ -53,6 +54,7 @@ class TetrisGame:
         self.ai_current_y = 0
         self.ai_fall_speed = INITIAL_SPEED
         self.ai_is_slowed = False
+        self.ai_slowdown_timer = None
         
         # Create AI player
         self.ai = TetrisAI(self)
@@ -219,20 +221,25 @@ class TetrisGame:
             self.canvas.itemconfig(self.timer_text, text=timer_string)
             self.master.after(1000, self._update_timer) 
 
-    def _activate_slowdown(self, is_human):
-        """Activate the slowdown bonus for a player"""
-        if is_human:
+    def _activate_slowdown(self): # REMOVE the ARGUMENT
+        """Activate the slowdown bonus for both players"""
+        # Human player slowdown
+        if not self.human_is_slowed:
             self.human_is_slowed = True
-            self.human_fall_speed = int(self.human_fall_speed / SLOWDOWN_PERCENTAGE)
-            # Schedule end of slowdown
-            self.master.after(SLOWDOWN_BONUS_DURATION, self._end_human_slowdown)
-        else:
+            self.human_fall_speed = int(self.human_fall_speed / SLOWDOWN_PERCENTAGE) # Divide
+        if self.human_slowdown_timer is not None:
+            self.master.after_cancel(self.human_slowdown_timer)  # Cancel any existing timer
+        self.human_slowdown_timer = self.master.after(SLOWDOWN_BONUS_DURATION, self._end_human_slowdown) # set the timer
+
+        # AI player slowdown
+        if not self.ai_is_slowed:
             self.ai_is_slowed = True
-            self.ai_fall_speed = int(self.ai_fall_speed / SLOWDOWN_PERCENTAGE)
-            # Schedule end of slowdown
-            self.master.after(SLOWDOWN_BONUS_DURATION, self._end_ai_slowdown)
-        
-        self._show_status_message(f"{'Human' if is_human else 'AI'} gets a Slowdown Bonus!")
+            self.ai_fall_speed = int(self.ai_fall_speed / SLOWDOWN_PERCENTAGE) # Divide
+        if self.ai_slowdown_timer is not None:
+            self.master.after_cancel(self.ai_slowdown_timer)  # Cancel any existing timer
+        self.ai_slowdown_timer =  self.master.after(SLOWDOWN_BONUS_DURATION, self._end_ai_slowdown) # set the timer
+
+        self._show_status_message(f"Slowdown Bonus activated for both players!")
     
     def _end_human_slowdown(self):
         """End the slowdown bonus for the human player"""
@@ -349,7 +356,7 @@ class TetrisGame:
         # Slowdown Bonus: Every 1000 points, pieces fall 20% slower for 10 seconds
         current_score = human_score if is_human else ai_score
         if current_score // SLOWDOWN_BONUS_THRESHOLD > (current_score - score_added) // SLOWDOWN_BONUS_THRESHOLD:
-            self._activate_slowdown(is_human)
+            self._activate_slowdown() 
         
         # Special Piece: Every 3000 points, a unique-shaped piece appears
         if current_score // SPECIAL_PIECE_THRESHOLD > (current_score - score_added) // SPECIAL_PIECE_THRESHOLD:

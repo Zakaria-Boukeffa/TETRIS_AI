@@ -54,7 +54,7 @@ The game includes several special mechanics to make gameplay more dynamic:
 When a player clears 2 or more lines at once, their opponent receives an "easy piece" (either an I-shaped or O-shaped piece). This adds a strategic element to the game, as clearing multiple lines can help your opponent.
 
 ### Slowdown Bonus
-Every 1000 points, the opponent's pieces fall 20% slower for 10 seconds. This gives the player who reached the score milestone a temporary advantage.
+Every 1000 points, the pieces fall 20% slower for 10 seconds
 
 ### Special Piece
 Every 3000 points, a special-shaped piece (heart or star) appears. Placing this piece correctly awards an additional 100 bonus points. These unique pieces add visual interest and a scoring opportunity.

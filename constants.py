@@ -14,7 +14,7 @@ BOARD_HEIGHT = 20
 BLOCK_SIZE = 25
 
 # Game Speeds
-INITIAL_SPEED = 550  # milliseconds between piece movements
+INITIAL_SPEED = 400  # milliseconds between piece movements
 SPEED_INCREASE = 100   # speed increase per level (ms)
 MIN_SPEED = 100       # minimum speed (ms)
 
