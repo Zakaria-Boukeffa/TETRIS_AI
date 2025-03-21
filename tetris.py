@@ -248,25 +248,25 @@ class TetrisGame:
             self.canvas.itemconfig(self.timer_text, text=timer_string)
             self.master.after(1000, self._update_timer) 
 
-    def _activate_slowdown(self): # REMOVE the ARGUMENT
+    def _activate_slowdown(self):
         """Activate the slowdown bonus for both players"""
         # Human player slowdown
         if not self.human_is_slowed:
             self.human_is_slowed = True
-            self.human_fall_speed = int(self.human_fall_speed / SLOWDOWN_PERCENTAGE) # Divide
+            self.human_fall_speed = int(self.human_fall_speed / SLOWDOWN_PERCENTAGE)
         if self.human_slowdown_timer is not None:
-            self.master.after_cancel(self.human_slowdown_timer)  # Cancel any existing timer
-        self.human_slowdown_timer = self.master.after(SLOWDOWN_BONUS_DURATION, self._end_human_slowdown) # set the timer
+            self.master.after_cancel(self.human_slowdown_timer)
+        self.human_slowdown_timer = self.master.after(SLOWDOWN_BONUS_DURATION, self._end_human_slowdown)
 
         # AI player slowdown
         if not self.ai_is_slowed:
             self.ai_is_slowed = True
-            self.ai_fall_speed = int(self.ai_fall_speed / SLOWDOWN_PERCENTAGE) # Divide
+            self.ai_fall_speed = int(self.ai_fall_speed / SLOWDOWN_PERCENTAGE)
         if self.ai_slowdown_timer is not None:
-            self.master.after_cancel(self.ai_slowdown_timer)  # Cancel any existing timer
-        self.ai_slowdown_timer =  self.master.after(SLOWDOWN_BONUS_DURATION, self._end_ai_slowdown) # set the timer
+            self.master.after_cancel(self.ai_slowdown_timer)
+        self.ai_slowdown_timer = self.master.after(SLOWDOWN_BONUS_DURATION, self._end_ai_slowdown)
 
-        self._show_status_message(f"Slowdown Bonus activated for both players!")
+        self._show_status_message("Slowdown Bonus activated for both players!")
     
     def _end_human_slowdown(self):
         """End the slowdown bonus for the human player"""
