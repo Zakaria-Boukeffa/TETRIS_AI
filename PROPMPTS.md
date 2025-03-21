@@ -3,8 +3,10 @@
 This document contains the prompts used during the development of the Tetris: Human vs AI game project.
 
 ## prompt used to create the best prompts : GPT-4o
+```
 Using the details from the 'prompt' file and the 'tetris_project' file, generate the most effective prompt to instruct a generative AI to develop the project for me. 
 Note: The 'prompt' file serves as a guide for creating a good prompt, while the 'tetris_project' file is a test for a course on using generative AI for code generation.
+```
 
 ## Initial Development Prompt : Claude
 
