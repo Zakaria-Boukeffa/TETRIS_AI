@@ -14,8 +14,8 @@ BOARD_HEIGHT = 20
 BLOCK_SIZE = 25
 
 # Game Speeds
-INITIAL_SPEED = 1000  # milliseconds between piece movements
-SPEED_INCREASE = 50   # speed increase per level (ms)
+INITIAL_SPEED = 550  # milliseconds between piece movements
+SPEED_INCREASE = 100   # speed increase per level (ms)
 MIN_SPEED = 100       # minimum speed (ms)
 
 # Board Positions
@@ -62,11 +62,12 @@ SPECIAL_PIECE_BONUS = 100
 
 # Special rule thresholds
 SLOWDOWN_BONUS_THRESHOLD = 1000
+SLOWDOWN_BONUS_DURATION = 10000  # 10 seconds in milliseconds
+SLOWDOWN_PERCENTAGE = 0.8  # 20% slower
 SPECIAL_PIECE_THRESHOLD = 3000
 COLOR_CHANGE_INTERVAL = 120000  # 2 minutes in milliseconds
 COLOR_CHANGE_DURATION = 20000   # 20 seconds in milliseconds
-SLOWDOWN_BONUS_DURATION = 10000  # 10 seconds in milliseconds
-SLOWDOWN_PERCENTAGE = 0.8  # 20% slower
+
 
 # Tetromino Shapes (representing the 7 standard tetrominos)
 SHAPES = {

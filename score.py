@@ -51,34 +51,38 @@ class ScoreManager:
         Returns the number of points added
         """
         points = 0
-        
-        # Base points for clearing lines
-        if lines_cleared > 0:
-            points += lines_cleared * POINTS_PER_LINE
-        
-        # Bonus points for multiple lines
-        if lines_cleared == 2:
-            points += BONUS_2_LINES
+
+        # Attribue des points selon le nombre de lignes complétées
+        if lines_cleared == 1:
+            points = POINTS_PER_LINE
+        elif lines_cleared == 2:
+            points = POINTS_PER_LINE * 2 + BONUS_2_LINES
+            # Cadeau surprise pour l'adversaire
+            if is_human:
+                self.ai_special_piece_active = True  # Activate special piece for AI
+            else:
+                self.human_special_piece_active = True  # Activate special piece for Human
         elif lines_cleared == 3:
-            points += BONUS_3_LINES
+            points = POINTS_PER_LINE * 3 + BONUS_3_LINES
         elif lines_cleared == 4:
-            points += BONUS_4_LINES
-        
-        # Apply special piece bonus if applicable
+            points = POINTS_PER_LINE * 4 + BONUS_4_LINES
+
+        # Bonus pour les pièces spéciales bien placées
         if is_human and self.human_special_piece_active:
             points += SPECIAL_PIECE_BONUS
             self.human_special_piece_active = False
         elif not is_human and self.ai_special_piece_active:
             points += SPECIAL_PIECE_BONUS
             self.ai_special_piece_active = False
-        
+
         # Update the appropriate score
         if is_human:
             self.human_score += points
         else:
             self.ai_score += points
-        
+
         return points
+
     
     def activate_special_piece_bonus(self, is_human):
         """Activate the special piece bonus for a player"""

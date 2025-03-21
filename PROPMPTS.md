@@ -2,7 +2,11 @@
 
 This document contains the prompts used during the development of the Tetris: Human vs AI game project.
 
-## Initial Development Prompt
+## prompt used to create the best prompts : GPT-4o
+Using the details from the 'prompt' file and the 'tetris_project' file, generate the most effective prompt to instruct a generative AI to develop the project for me. 
+Note: The 'prompt' file serves as a guide for creating a good prompt, while the 'tetris_project' file is a test for a course on using generative AI for code generation.
+
+## Initial Development Prompt : Claude
 
 ```
 - Goal:
@@ -52,9 +56,25 @@ This project is part of a course on Generative AI for Code Generation. The cours
 
 ## Continuation Prompt
 
+- I had a problem with the ui, So I asked 
+
 ```
-continue
+Fix this issue: The text at the bottom of the window is not showing properly. The score of both players and the instructions section are overlapping, making it difficult to read. It seems like the window is not big enough, or the layout is not handling the text correctly
 ```
 
+- Timer Placement:
 
+```
+Create a timer in the middle of the screen. It should be clearly visible and properly positioned without overlapping other elements.
+```
 
+- Score Calculation Fix:
+```
+There's a problem with the scoring—it sometimes gives incorrect calculations. Fix it by applying this exact logic:
+Points:
+50 par ligne.
+Bonus: 100 pour 2 lignes, 200 pour 3 lignes, 300 pour un Tetris (4 lignes).
+Affiche les scores en direct pour les deux joueurs.
+```
+
+- PS: I only had the free version of Claude, so once I reached the limit, I switched to Perplexity. I uploaded all the files and continued developing.

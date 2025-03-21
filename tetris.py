@@ -8,6 +8,11 @@ from score import ScoreManager
 class TetrisGame:
     def __init__(self, master):
         """Initialize the Tetris game with two boards - human and AI"""
+        
+        self.start_time = 0  # Time when the game starts
+        self.elapsed_time = 0  # Total time elapsed
+        self.timer_text = None  # Reference to the timer text object
+
         self.master = master
         self.score_manager = ScoreManager()
         
@@ -90,6 +95,15 @@ class TetrisGame:
             fill=TEXT_COLOR
         )
         
+        # Timer display
+        self.timer_text = self.canvas.create_text(
+            WINDOW_WIDTH // 2 - 20,
+            30,
+            text="Time: 00:00",
+            font=("Arial", 14),
+            fill=TEXT_COLOR
+        )
+        
         # Next piece preview labels
         self.canvas.create_text(
             HUMAN_BOARD_X + (BOARD_WIDTH * BLOCK_SIZE) // 2,
@@ -110,14 +124,14 @@ class TetrisGame:
         # Status message display (for bonuses, etc.)
         self.status_text = self.canvas.create_text(
             WINDOW_WIDTH // 2,
-            BOARD_Y + BOARD_HEIGHT * BLOCK_SIZE + 90,
+            BOARD_Y + BOARD_HEIGHT * BLOCK_SIZE + 80,
             text="",
             font=("Arial", 14, "bold"),
             fill=BONUS_TEXT_COLOR
         )
         
         # Help text for controls
-        controls_text = "Controls: ← → Move | ↑ Rotate | ↓ Soft Drop | Space Hard Drop | P Pause"
+        controls_text = "Controls: ← → Move | ↑ Rotate | ↓ Soft Drop | \n\n Space Hard Drop | P Pause "
         self.canvas.create_text(
             WINDOW_WIDTH // 2,
             WINDOW_HEIGHT - 30,
@@ -151,6 +165,10 @@ class TetrisGame:
         if not self.is_running:
             self.is_running = True
             self.game_over = False
+            
+            
+            self.start_time = time.time()  # Record the start time
+            self._update_timer()  # Start updating the timer display
             
             # Reset scores
             self.score_manager.reset_scores()
@@ -191,6 +209,16 @@ class TetrisGame:
             self._clear_status_message()
             self._redraw_boards()
     
+    def _update_timer(self):
+        """Update the timer display every second"""
+        if self.is_running and not self.game_over:
+            self.elapsed_time = int(time.time() - self.start_time)
+            minutes = self.elapsed_time // 60
+            seconds = self.elapsed_time % 60
+            timer_string = f"Time: {minutes:02}:{seconds:02}"
+            self.canvas.itemconfig(self.timer_text, text=timer_string)
+            self.master.after(1000, self._update_timer) 
+
     def _activate_slowdown(self, is_human):
         """Activate the slowdown bonus for a player"""
         if is_human:
